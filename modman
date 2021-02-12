@@ -1,2 +1,3 @@
 app/code/community/Etailer/TrademeCategory/     app/code/community/Etailer/TrademeCategory/
 app/etc/modules/Etailer_TrademeCategory.xml     app/etc/modules/Etailer_TrademeCategory.xml
+shell/trademe_category.php                      shell/trademe_category.php
