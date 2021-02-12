@@ -1,0 +1,15 @@
+{
+  "name": "etailer/trademe-category",
+  "license": "MIT",
+  "type": "magento-module",
+  "description": "Trade Me Category Mapping for Magento / OpenMage",
+  "homepage": "https://github.com/icecubenz-open-mage/Etailer_TrademeCategory",
+  "authors": [
+      {
+          "name": "Etailer"
+      }
+  ],
+  "require": {
+      "magento-hackathon/magento-composer-installer": "*"
+  }
+}

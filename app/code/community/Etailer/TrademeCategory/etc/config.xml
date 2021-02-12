@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Etailer_TrademeCategory>
+            <version>0.0.1</version>
+        </Etailer_TrademeCategory>
+    </modules>
+    <global>
+        <resources>
+            <trademe_category_setup>
+                <setup>
+                    <module>Etailer_TrademeCategory</module>
+                    <class>Mage_Catalog_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </trademe_category_setup>
+            <trademe_category_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </trademe_category_read>
+            <trademe_category_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </trademe_category_write>
+        </resources>
+    </global>
+</config>

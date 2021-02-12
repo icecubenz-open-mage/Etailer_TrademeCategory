@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Etailer_TrademeCategory>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Etailer_TrademeCategory>
+    </modules>
+</config>
