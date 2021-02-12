@@ -4,6 +4,8 @@ require_once 'abstract.php';
 
 class Etailer_Shell_TrademeCategory extends Mage_Shell_Abstract
 {
+    protected const DEFAULT_EXCLUDE = '0001-,0350-,5000-,9334-,2975-,9374-';
+
     /**
      * Run the command
      *
@@ -15,7 +17,7 @@ class Etailer_Shell_TrademeCategory extends Mage_Shell_Abstract
         $trademeJson = $this->getArg('tmjson');
         $active      = (bool) $this->getArg('active');
         $menu        = (bool) $this->getArg('menu');
-        $exclude     = $this->getArg('exclude') ?: '0001-,0350-,5000-';
+        $exclude     = $this->getArg('exclude') ?: self::DEFAULT_EXCLUDE;
         $exclude     = explode(',', $exclude);
 
         if ($rootCatId && $trademeJson) {
@@ -102,6 +104,8 @@ class Etailer_Shell_TrademeCategory extends Mage_Shell_Abstract
      */
     public function usageHelp()
     {
+        $defaultExclude = self::DEFAULT_EXCLUDE;
+
         return <<<USAGE
 Create Trade Me categories inside an existing category structure from the Trade Me public API:
 https://developer.trademe.co.nz/api-reference/catalogue-methods/retrieve-general-categories/
@@ -120,7 +124,7 @@ Usage:  php -f trademe_category.php -- [options]
   --menu                   Set category to include in menu? (default: false)
 
   --exclude                Comma separated list of Trade Me category "Numbers" to exclude
-                           (default: 0001-,0350-,5000-)
+                           (default: $defaultExclude)
 
   help                     This help
 
