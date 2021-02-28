@@ -2,6 +2,9 @@
 
 require_once 'abstract.php';
 
+use League\Csv\EncloseField;
+use League\Csv\Writer;
+
 class Etailer_Shell_TrademeCategoryOmnivoreExport extends Mage_Shell_Abstract
 {
     protected $_map = array();
@@ -15,18 +18,15 @@ class Etailer_Shell_TrademeCategoryOmnivoreExport extends Mage_Shell_Abstract
     public function run()
     {
         $rootCatId = $this->getArg('catid');
-        $outputFile = $this->getArg('output-file');
 
-        if ($rootCatId && $outputFile) {
+        if ($rootCatId) {
             $this->_getMapping($rootCatId);
 
-            $fp = fopen($outputFile, 'w');
-
-            fputcsv($fp, self::HEADERS);
-            foreach ($this->_map as $fields) {
-                fputcsv($fp, $fields);
-            }
-            fclose($fp);
+            $csv = Writer::createFromString();
+            EncloseField::addTo($csv, "\t\x1f"); //adding the stream filter to force enclosure
+            $csv->insertOne(self::HEADERS);
+            $csv->insertAll($this->_map);
+            echo $csv->getContent();
 
             return $this;
         }
@@ -77,8 +77,6 @@ Exports Trade Me Category Mapping CSV for Omnivore / TradeRunner.
 Usage:  php -f trademe_category_omnivore_export.php -- [options]
 
   --catid <id>             Target Magento category ID to export (base of the tree)
-
-  --output-file <filename> Output filename e.g. mapping.csv
 
   help                     This help
 

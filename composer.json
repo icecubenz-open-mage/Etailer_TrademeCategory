@@ -10,6 +10,7 @@
       }
   ],
   "require": {
+      "league/csv": "^9.6",
       "magento-hackathon/magento-composer-installer": "*"
   }
 }
