@@ -2,10 +2,15 @@
 <config>
     <modules>
         <Etailer_TrademeCategory>
-            <version>0.0.1</version>
+            <version>1.0.0</version>
         </Etailer_TrademeCategory>
     </modules>
     <global>
+        <models>
+            <trademe_category>
+                <class>Etailer_TrademeCategory_Model</class>
+            </trademe_category>
+        </models>
         <resources>
             <trademe_category_setup>
                 <setup>

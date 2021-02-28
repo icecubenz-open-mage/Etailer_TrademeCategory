@@ -41,7 +41,8 @@ class Etailer_Shell_TrademeCategoryOmnivoreExport extends Mage_Shell_Abstract
     {
         $_category = Mage::getModel('catalog/category')->load($categoryId);
         if ($_category->getId()) {
-            if ($_category->getData('trademe_category_number')) {
+            if ((bool) $_category->getData('trademe_category_number') &&
+                (int) $_category->getData('trademe_category_aob') === Etailer_TrademeCategory_Model_Areaofbusiness::MARKETPLACE) {
                 // same map as the headers
                 $this->_map[] = array(
                     '', // sku
@@ -49,7 +50,7 @@ class Etailer_Shell_TrademeCategoryOmnivoreExport extends Mage_Shell_Abstract
                     '', // keyword
                     $_category->getData('trademe_category_number'), // marketcat1
                     '', // marketcat2
-                    '' // marketcat3
+                    ''  // marketcat3
                 );
             }
 
@@ -69,10 +70,8 @@ class Etailer_Shell_TrademeCategoryOmnivoreExport extends Mage_Shell_Abstract
      */
     public function usageHelp()
     {
-        $defaultExclude = self::DEFAULT_EXCLUDE;
-
         return <<<USAGE
-Exports Trade Me Category Mapping CSV for Omnivore / TradeRunner.
+Exports Trade Me Category Mapping CSV for Omnivore / TradeRunner. Only exports Marketplace Area Of Business categories (as that's all Omnivore supports).
 
 Usage:  php -f trademe_category_omnivore_export.php -- [options]
 
