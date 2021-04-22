@@ -6,6 +6,17 @@
         </Etailer_TrademeCategory>
     </modules>
     <global>
+        <blocks>
+            <trademe_category>
+                <class>Etailer_TrademeCategory_Block</class>
+            </trademe_category>
+            <adminhtml>
+                <rewrite>
+                    <catalog_product_edit_tab_categories>Etailer_TrademeCategory_Block_Catalog_Product_Edit_Tab_Categories</catalog_product_edit_tab_categories>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+
         <models>
             <trademe_category>
                 <class>Etailer_TrademeCategory_Model</class>
@@ -39,7 +50,7 @@
                 <observers>
                     <trademe_category_catalog_category_load_after>
                         <class>trademe_category/observer</class>
-                        <method>lockCategoryAttributes</method>
+                        <method>lockCategories</method>
                     </trademe_category_catalog_category_load_after>
                 </observers>
             </catalog_category_load_after>

@@ -2,7 +2,7 @@
 
 class Etailer_TrademeCategory_Model_Observer
 {
-    public function lockCategoryAttributes(Varien_Event_Observer $observer)
+    public function lockCategories(Varien_Event_Observer $observer)
     {
         $event = $observer->getEvent();
         $category = $event->getCategory();
