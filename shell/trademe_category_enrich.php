@@ -14,13 +14,28 @@ class Etailer_Shell_TrademeCategoryEnrich extends Mage_Shell_Abstract
      */
     public function run()
     {
+        ini_set('display_errors', 1);
+        ini_set('memory_limit', '16000M');
+        error_reporting(E_ALL);
+        set_time_limit(36000);
+
         $trademeJson = $this->getArg('tmjson') ?: self::TRADEME_JSON_URL;
 
         if ($trademeJson) {
             $this->_trademeCategories = $this->_getJsonFromUrl($trademeJson);
 
+            $collection = Mage::getSingleton('index/indexer')->getProcessesCollection();
+            foreach ($collection as $process) {
+                $process->setMode(Mage_Index_Model_Process::MODE_MANUAL)->save();
+            }
+
             foreach ($this->_trademeCategories['Subcategories'] as $trademeCategory) {
                 $this->_enrichCategories($trademeCategory);
+            }
+
+            foreach ($collection as $process) {
+                $process->setMode(Mage_Index_Model_Process::MODE_REAL_TIME)->save();
+                $process->reindexEverything();
             }
 
             return $this;
@@ -36,14 +51,29 @@ class Etailer_Shell_TrademeCategoryEnrich extends Mage_Shell_Abstract
     {
         $categoryCollection = Mage::getModel('catalog/category')
             ->getCollection()
+            ->addAttributeToSelect('trademe_category_name')
+            ->addAttributeToSelect('trademe_category_number')
+            ->addAttributeToSelect('trademe_category_path')
+            ->addAttributeToSelect('trademe_category_aob')
+            ->addAttributeToSelect('trademe_category_is_leaf')
             ->addAttributeToFilter('trademe_category_number', $trademeCategory['Number']);
         foreach ($categoryCollection as $_category) {
-            $_category = Mage::getModel('catalog/category')->load($_category->getId());
+            // $_category = Mage::getModel('catalog/category')->load($_category->getId());
             $_category->setData('trademe_category_name', $trademeCategory['Name'])
                 ->setData('trademe_category_path', $trademeCategory['Path'])
                 ->setData('trademe_category_aob', $trademeCategory['AreaOfBusiness'])
                 ->setData('trademe_category_is_leaf', $trademeCategory['IsLeaf'])
                 ->save();
+
+            if ((bool) !$trademeCategory['IsLeaf']) {
+                $_products = Mage::getResourceModel('catalog/product_collection')
+                    ->setStoreId(Mage::app()->getStore()->getId())
+                    ->addCategoryFilter($_category);
+
+                foreach ($_products as $_product) {
+                    Mage::getSingleton('catalog/category_api')->removeProduct($_category->getId(), $_product->getId());
+                }
+            }
         }
 
         foreach ($trademeCategory['Subcategories'] as $trademeSubcategory) {
