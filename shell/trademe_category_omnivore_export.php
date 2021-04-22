@@ -42,7 +42,8 @@ class Etailer_Shell_TrademeCategoryOmnivoreExport extends Mage_Shell_Abstract
         $_category = Mage::getModel('catalog/category')->load($categoryId);
         if ($_category->getId()) {
             if ((bool) $_category->getData('trademe_category_number') &&
-                (int) $_category->getData('trademe_category_aob') === Etailer_TrademeCategory_Model_Areaofbusiness::MARKETPLACE) {
+                (int) $_category->getData('trademe_category_aob') === Etailer_TrademeCategory_Model_Areaofbusiness::MARKETPLACE &&
+                (bool) $_category->getData('trademe_category_is_leaf')) {
                 // same map as the headers
                 $this->_map[] = array(
                     '', // sku

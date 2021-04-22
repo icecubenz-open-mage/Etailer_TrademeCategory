@@ -42,6 +42,7 @@ class Etailer_Shell_TrademeCategoryEnrich extends Mage_Shell_Abstract
             $_category->setData('trademe_category_name', $trademeCategory['Name'])
                 ->setData('trademe_category_path', $trademeCategory['Path'])
                 ->setData('trademe_category_aob', $trademeCategory['AreaOfBusiness'])
+                ->setData('trademe_category_is_leaf', $trademeCategory['IsLeaf'])
                 ->save();
         }
 

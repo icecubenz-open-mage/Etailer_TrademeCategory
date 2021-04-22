@@ -1,4 +1,4 @@
-app/code/community/Etailer/TrademeCategory/    app/code/community/Etailer/TrademeCategory/
+app/code/community/Etailer/TrademeCategory/     app/code/community/Etailer/TrademeCategory/
 app/etc/modules/Etailer_TrademeCategory.xml     app/etc/modules/Etailer_TrademeCategory.xml
 shell/trademe_category_create.php               shell/trademe_category_create.php
 shell/trademe_category_enrich.php               shell/trademe_category_enrich.php

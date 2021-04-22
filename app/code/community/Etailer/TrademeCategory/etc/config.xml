@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Etailer_TrademeCategory>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </Etailer_TrademeCategory>
     </modules>
     <global>
@@ -33,4 +33,16 @@
             </trademe_category_write>
         </resources>
     </global>
+    <adminhtml>
+        <events>
+            <catalog_category_load_after>
+                <observers>
+                    <trademe_category_catalog_category_load_after>
+                        <class>trademe_category/observer</class>
+                        <method>lockCategoryAttributes</method>
+                    </trademe_category_catalog_category_load_after>
+                </observers>
+            </catalog_category_load_after>
+        </events>
+    </adminhtml>
 </config>
